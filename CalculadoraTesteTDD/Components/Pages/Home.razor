@@ -1,0 +1,224 @@
+@page "/"
+@using CalculadoraTesteTDD.Services
+
+<PageTitle>Calculadora - Testes de Software</PageTitle>
+
+<div class="container py-4">
+    <header class="mb-4">
+        <h1 class="display-6 fw-bold">Calculadora – Testes de Software</h1>
+        <p class="lead text-body-secondary mb-0">Validação das operações matemáticas.</p>
+    </header>
+
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <button type="button" class="btn btn-primary" @onclick="ExecutarTestes">Executar testes</button>
+        <button type="button" class="btn btn-outline-secondary" @onclick="LimparResultados">Limpar resultados</button>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h2 class="h4 card-title">Soma</h2>
+                    <p class="fs-5 font-monospace">100 + 50</p>
+                    <dl class="row mb-3">
+                        <dt class="col-7">Valor esperado</dt><dd class="col-5 text-end">150</dd>
+                        <dt class="col-7">Valor recebido</dt><dd class="col-5 text-end">@ExibirResultado(resultadoSoma)</dd>
+                    </dl>
+                    <div class="alert @classeSoma mb-0" role="status">@testeSoma</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h2 class="h4 card-title">Subtração</h2>
+                    <p class="fs-5 font-monospace">100 - 50</p>
+                    <dl class="row mb-3">
+                        <dt class="col-7">Valor esperado</dt><dd class="col-5 text-end">50</dd>
+                        <dt class="col-7">Valor recebido</dt><dd class="col-5 text-end">@ExibirResultado(resultadoSubtracao)</dd>
+                    </dl>
+                    <div class="alert @classeSubtracao mb-0" role="status">@testeSubtracao</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h2 class="h4 card-title">Multiplicação</h2>
+                    <p class="fs-5 font-monospace">10 × 5</p>
+                    <dl class="row mb-3">
+                        <dt class="col-7">Valor esperado</dt><dd class="col-5 text-end">50</dd>
+                        <dt class="col-7">Valor recebido</dt><dd class="col-5 text-end">@ExibirResultado(resultadoMultiplicacao)</dd>
+                    </dl>
+                    <div class="alert @classeMultiplicacao mb-0" role="status">@testeMultiplicacao</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h2 class="h4 card-title">Divisão</h2>
+                    <p class="fs-5 font-monospace">100 ÷ 2</p>
+                    <dl class="row mb-3">
+                        <dt class="col-7">Valor esperado</dt><dd class="col-5 text-end">50</dd>
+                        <dt class="col-7">Valor recebido</dt><dd class="col-5 text-end">@ExibirResultado(resultadoDivisao)</dd>
+                    </dl>
+                    <div class="alert @classeDivisao mb-0" role="status">@testeDivisao</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="mt-4" aria-labelledby="titulo-log">
+        <h2 id="titulo-log" class="h4">Log de execução</h2>
+        <div class="log-terminal rounded p-3" aria-live="polite">
+            <div class="@classeSoma">[SOMA] @testeSoma</div>
+            <div class="@classeSubtracao">[SUBTRAÇÃO] @testeSubtracao</div>
+            <div class="@classeMultiplicacao">[MULTIPLICAÇÃO] @testeMultiplicacao</div>
+            <div class="@classeDivisao">[DIVISÃO] @testeDivisao</div>
+        </div>
+    </section>
+
+    <section class="card border-secondary-subtle mt-4">
+        <div class="card-body">
+            <h2 class="h4 card-title">Orientações da atividade</h2>
+            <ol class="mb-3">
+                <li>Execute a aplicação e observe os valores recebidos.</li>
+                <li>Descomente os testes da soma e da subtração.</li>
+                <li>Execute novamente e identifique as falhas.</li>
+                <li>Implemente os testes da multiplicação e da divisão.</li>
+                <li>Execute os quatro testes.</li>
+                <li>Corrija as operações na classe <code>CalculadoraService</code>.</li>
+                <li>Execute novamente os testes até que todos sejam aprovados.</li>
+                <li>Refatore os métodos, utilizando nomes de parâmetros mais descritivos e adicionando comentários.</li>
+                <li>Execute novamente todos os testes para verificar se a refatoração não introduziu novos erros.</li>
+            </ol>
+            <div class="alert alert-warning mb-0" role="note">
+                <strong>Não altere os valores esperados para fazer os testes passarem. Corrija as funcionalidades responsáveis pelos resultados incorretos.</strong>
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    CalculadoraService calculadora = new CalculadoraService();
+
+    int? resultadoSoma;
+    int? resultadoSubtracao;
+    int? resultadoMultiplicacao;
+    int? resultadoDivisao;
+
+    string testeSoma = "Teste não implementado";
+    string testeSubtracao = "Teste não implementado";
+    string testeMultiplicacao = "Teste não implementado";
+    string testeDivisao = "Teste não implementado";
+
+    string classeSoma = "alert-secondary";
+    string classeSubtracao = "alert-secondary";
+    string classeMultiplicacao = "alert-secondary";
+    string classeDivisao = "alert-secondary";
+
+    public void ExecutarTestes()
+    {
+        // ==================================
+        // TESTE 1 - SOMA
+        // ==================================
+
+        int esperadoSoma = 150;
+
+        resultadoSoma = calculadora.Somar(100, 50);
+
+        /*
+        if (resultadoSoma == esperadoSoma)
+        {
+            testeSoma = "TESTE PASSOU";
+            classeSoma = "alert-success";
+        }
+        else
+        {
+            testeSoma = "TESTE FALHOU - Esperado: "
+                + esperadoSoma
+                + " | Recebido: "
+                + resultadoSoma;
+
+            classeSoma = "alert-danger";
+        }
+        */
+
+        // ==================================
+        // TESTE 2 - SUBTRAÇÃO
+        // ==================================
+
+        int esperadoSubtracao = 50;
+
+        resultadoSubtracao = calculadora.Subtrair(100, 50);
+
+        /*
+        if (resultadoSubtracao == esperadoSubtracao)
+        {
+            testeSubtracao = "TESTE PASSOU";
+            classeSubtracao = "alert-success";
+        }
+        else
+        {
+            testeSubtracao = "TESTE FALHOU - Esperado: "
+                + esperadoSubtracao
+                + " | Recebido: "
+                + resultadoSubtracao;
+
+            classeSubtracao = "alert-danger";
+        }
+        */
+
+        // ==================================
+        // TESTE 3 - MULTIPLICAÇÃO
+        // ==================================
+
+        int esperadoMultiplicacao = 50;
+
+        resultadoMultiplicacao = calculadora.Multiplicar(10, 5);
+
+        // TODO: Implemente o teste da multiplicação.
+
+        // ==================================
+        // TESTE 4 - DIVISÃO
+        // ==================================
+
+        int esperadoDivisao = 50;
+
+        resultadoDivisao = calculadora.Dividir(100, 2);
+
+        // TODO: Implemente o teste da divisão.
+    }
+
+    public void LimparResultados()
+    {
+        resultadoSoma = null;
+        resultadoSubtracao = null;
+        resultadoMultiplicacao = null;
+        resultadoDivisao = null;
+
+        testeSoma = "Teste não implementado";
+        testeSubtracao = "Teste não implementado";
+        testeMultiplicacao = "Teste não implementado";
+        testeDivisao = "Teste não implementado";
+
+        classeSoma = "alert-secondary";
+        classeSubtracao = "alert-secondary";
+        classeMultiplicacao = "alert-secondary";
+        classeDivisao = "alert-secondary";
+    }
+
+    string ExibirResultado(int? resultado)
+    {
+        if (resultado.HasValue)
+        {
+            return resultado.Value.ToString();
+        }
+
+        return "—";
+    }
+}
